@@ -1,10 +1,12 @@
 #ifndef AUTHMANAGER_H
 #define AUTHMANAGER_H
 
-class authmanager
-{
+#include <QString>
+
+class AuthManager {
 public:
-    authmanager();
+    static QString login(const QString &username, const QString &password);
+    static int getStudentId(const QString &username);
 };
 
 #endif // AUTHMANAGER_H

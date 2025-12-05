@@ -1,22 +1,27 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QDialog>
+#include <QMainWindow>
 
 namespace Ui {
-class mainwindow;
+class MainWindow;
 }
 
-class mainwindow : public QDialog
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit mainwindow(QWidget *parent = nullptr);
-    ~mainwindow();
+    explicit MainWindow(const QString &username, const QString &role, QWidget *parent = nullptr);
+    ~MainWindow();
+
+private slots:
+    void on_btnOpenAdmin_clicked();
+    void on_btnOpenStudent_clicked();
 
 private:
-    Ui::mainwindow *ui;
+    Ui::MainWindow *ui;
+    QString username, role;
 };
 
-#endif // MAINWINDOW_H
+#endif

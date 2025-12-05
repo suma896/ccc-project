@@ -1,10 +1,25 @@
 #ifndef LOGINWINDOW_H
 #define LOGINWINDOW_H
 
-class loginwindow
+#include <QWidget>
+
+namespace Ui {
+class LoginWindow;
+}
+
+class LoginWindow : public QWidget
 {
+    Q_OBJECT
+
 public:
-    loginwindow();
+    explicit LoginWindow(QWidget *parent = nullptr);
+    ~LoginWindow();
+
+private slots:
+    void on_btnLogin_clicked();
+
+private:
+    Ui::LoginWindow *ui;
 };
 
-#endif // LOGINWINDOW_H
+#endif
