@@ -1,15 +1,26 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
-#include "database.h"
+
 #include "authmanager.h"
 #include "mainwindow.h"
+
+#include <QMessageBox>
+#include <QLineEdit>
+#include <QDebug>
 
 LoginWindow::LoginWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LoginWindow)
 {
     ui->setupUi(this);
-    Database::connect();
+
+    // Ensure password field hides text
+    if (auto pwd = this->findChild<QLineEdit*>("txtPassword"))
+        pwd->setEchoMode(QLineEdit::Password);
+
+    // Connect button if UI uses btnLogin
+    if (ui->btnLogin)
+        connect(ui->btnLogin, &QPushButton::clicked, this, &LoginWindow::on_btnLogin_clicked);
 }
 
 LoginWindow::~LoginWindow()
@@ -19,17 +30,27 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_btnLogin_clicked()
 {
-    QString uname = ui->txtUsername->text();
-    QString pass = ui->txtPassword->text();
+    // Read username + password
+    QString username = ui->txtUsername->text().trimmed();
+    QString password = ui->txtPassword->text().trimmed();
 
-    QString role = AuthManager::login(uname, pass);
-
-    if (role == "") {
-        ui->lblMessage->setText("Invalid username or password!");
+    if (username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Login Failed", "Please enter both username and password.");
         return;
     }
 
-    MainWindow *mw = new MainWindow(uname, role);
+    // Authenticate using AuthManager
+    QString role = AuthManager::login(username, password);
+
+    if (role.isEmpty()) {
+        QMessageBox::warning(this, "Login Failed", "Invalid username or password!");
+        return;
+    }
+
+    // Open main window
+    MainWindow *mw = new MainWindow(username, role);
     mw->show();
+
+    // Close login window
     this->close();
 }

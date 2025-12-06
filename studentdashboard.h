@@ -1,22 +1,29 @@
 #ifndef STUDENTDASHBOARD_H
 #define STUDENTDASHBOARD_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
-class studentdashboard;
+class StudentDashboard;
 }
 
-class studentdashboard : public QDialog
+class StudentDashboard : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit studentdashboard(QWidget *parent = nullptr);
-    ~studentdashboard();
+    explicit StudentDashboard(int studentId, QWidget *parent = nullptr);
+    ~StudentDashboard();
+
+private slots:
+    void on_btnSubmit_clicked();
 
 private:
-    Ui::studentdashboard *ui;
+    Ui::StudentDashboard *ui;
+    int id;
+
+    void loadProfile();
+    void loadRequests();
 };
 
 #endif // STUDENTDASHBOARD_H

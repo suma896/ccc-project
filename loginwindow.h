@@ -22,4 +22,4 @@ private:
     Ui::LoginWindow *ui;
 };
 
-#endif
+#endif // LOGINWINDOW_H

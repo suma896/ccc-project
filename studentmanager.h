@@ -1,10 +1,18 @@
 #ifndef STUDENTMANAGER_H
 #define STUDENTMANAGER_H
 
-class studentmanager
+#include <QString>
+#include <QVector>
+#include <QMap>
+
+class StudentManager
 {
 public:
-    studentmanager();
+    static QMap<QString, QString> getStudent(int studentId);
+    static QVector<QMap<QString, QString>> getAllStudents();
+    static bool addStudent(QMap<QString, QString> data);
+    static bool updateStudent(int id, QMap<QString, QString> data);
+    static bool deleteStudent(int id);
 };
 
 #endif // STUDENTMANAGER_H
